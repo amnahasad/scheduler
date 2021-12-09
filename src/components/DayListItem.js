@@ -3,7 +3,6 @@ import classNames from "classnames";
 import "components/DayListItem.scss";
 
 
-
 const formatSpots = function(spots) {
     return (spots === 0 ? "no spots remaining" : `${spots} spot${spots === 1 ? "" : "s"} remaining`);
 };
