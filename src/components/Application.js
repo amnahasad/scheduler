@@ -79,7 +79,12 @@ export default function Application(props) {
       ...state,
       appointments
     });
-    
+
+    const request = axios.put(`/api/appointments/${id}`, appointment)
+    .catch(error => {
+      console.log(error);
+    });
+    return request;
   }
 
   const schedule = appointments.map((appointment) => {
