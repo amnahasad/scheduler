@@ -6,12 +6,15 @@ import Empty from './Empty';
 import useVisualMode from 'hooks/useVisualMode';
 import Form from './Form';
 import Status from './Status';
+import Confirm from './Confirm';
 
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
 
 export default function Appointment(props) {
@@ -26,8 +29,25 @@ export default function Appointment(props) {
           interviewer
         };
 
-        props.bookInterview(props.id, interview);
-        transition(SHOW);
+        props.bookInterview(props.id, interview)
+        .then(() => {
+            setTimeout(() => {
+                transition(SHOW);
+              },2000)
+        });
+      }
+
+      function deleteId() {
+          transition(DELETING);
+          props.cancelInterview(props.id)
+          .then(() => {
+              setTimeout(() => {
+                transition(EMPTY);
+              },2000)
+          });
+      }
+      function confirm() {
+          transition(CONFIRM);
       }
     return (
         <article className="appointment">
@@ -37,6 +57,8 @@ export default function Appointment(props) {
                 <Show
                     student={props.interview.student}
                     interviewer={props.interview.interviewer.name}
+                    onCancel={back}
+                    onConfirm={confirm}
                 />
             )}
             {mode === CREATE &&
@@ -47,6 +69,14 @@ export default function Appointment(props) {
                 />
             }
             {mode === SAVING && <Status message="Saving" />}
+            {mode === CONFIRM && 
+                <Confirm
+                message="Are you sure you want to cancel this appoinement?"
+                onCancel={back}
+                onConfirm={deleteId} 
+                />
+            }
+            {mode === DELETING && <Status message="Deleting" />}
             {/* {(props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer.name} /> : <Empty /> )} */}
         </article>
     );
