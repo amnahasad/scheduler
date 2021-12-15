@@ -4,7 +4,7 @@ import axios from 'axios';
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay  } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 // const appointments = [
 //   {
@@ -75,15 +75,18 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({
-      ...state,
-      appointments
-    });
+
 
     const request = axios.put(`/api/appointments/${id}`, appointment)
-    .catch(error => {
-      console.log(error);
-    });
+      .then(response => {
+        setState({
+          ...state,
+          appointments
+        });
+      })
+      // .catch(error => {
+      //   console.log(error);
+      // });
     return request;
   }
 
@@ -99,15 +102,17 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({
-      ...state,
-      appointments
-    });
 
     const request = axios.delete(`/api/appointments/${id}`, appointment)
-    .catch(error => {
-      console.log(error);
-    });
+      .then(response => {
+        setState({
+          ...state,
+          appointments
+        });
+      })
+      // .catch(error => {
+      //   console.log(error);
+      // });
     return request;
   }
 
@@ -138,7 +143,7 @@ export default function Application(props) {
     })
   }, []);
 
-  
+
 
   return (
     <main className="layout">
@@ -164,7 +169,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        <Appointment time="5pm"/>
+        <Appointment time="5pm" />
       </section>
     </main>
   );
