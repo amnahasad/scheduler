@@ -30,12 +30,18 @@ export default function useApplicationData(props) {
 
         const request = axios.put(`/api/appointments/${id}`, appointment)
             .then(response => {
-                setState({
-                    ...state,
-                    appointments
-                });
+                const days = state.days.map((day) => {
+                    const returnedDay = { ...day };
+                    if (returnedDay.appointments.includes(id)) {
+                        returnedDay.spots--;
+                    }
+                    return returnedDay;
+                })
             })
-
+        setState({
+            ...state,
+            appointments
+        });
         return request;
     }
 
@@ -54,11 +60,19 @@ export default function useApplicationData(props) {
 
         const request = axios.delete(`/api/appointments/${id}`, appointment)
             .then(response => {
-                setState({
-                    ...state,
-                    appointments
-                });
+                const days = state.days.map((day) => {
+                    const returnedDay = { ...day };
+                    if (returnedDay.appointments.includes(id)) {
+                        returnedDay.spots++;
+                    }
+                    return returnedDay;
+                })
+
             })
+        setState({
+            ...state,
+            appointments
+        });
         return request;
     }
 
@@ -75,5 +89,5 @@ export default function useApplicationData(props) {
         })
     }, []);
 
-    return {state, setDay, bookInterview, cancelInterview};
+    return { state, setDay, bookInterview, cancelInterview };
 }
