@@ -14,17 +14,14 @@ import { cleanup, render } from "@testing-library/react";
 */
 import Appointment from "components/Appointment";
 
-// /*
-//   A test that renders a React Component
-// */
-// it("renders without crashing", () => {
-//   render(<Application />);
-// });
+/*
+  A test that renders a React Component
+*/
 
 afterEach(cleanup);
 
 describe("Appointment", () => {
-    it("renders without crashing", () => {
-      render(<Appointment />);
-    });
+  it("renders without crashing", () => {
+    render(<Appointment />);
   });
+});

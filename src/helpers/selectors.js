@@ -1,5 +1,4 @@
 export const getAppointmentsForDay = (state, day) => {
-
     let thisDay = day;
     let appointmentsPerDay = [];
 
@@ -20,13 +19,11 @@ export const getInterview = (state, interview) => {
     if (!interview) {
         return null;
     }
-
     const interviewer = state.interviewers[interview.interviewer];
     const interviewReturn = {
         student: interview.student,
         interviewer
     };
-
     return interviewReturn;
 };
 

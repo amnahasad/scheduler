@@ -21,13 +21,14 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 
+//This is the appoinment component, it manages all the appoinments
 export default function Appointment(props) {
     const { mode, transition, back } = useVisualMode(
         props.interview ? SHOW : EMPTY
     );
 
+    //The student and interviewer name get saved when the user creates or edits and interview
     function save(name, interviewer) {
-
         const interview = {
             student: name,
             interviewer
@@ -37,16 +38,14 @@ export default function Appointment(props) {
 
         props.bookInterview(props.id, interview)
             .then(() => {
-                console.log("This is a testttt before show----");
-                
-                transition(SHOW)})
+                transition(SHOW)
+            })
             .catch(error => {
-                console.log("This is a testttt AFTERRR show----");
-                transition(ERROR_SAVE, true)});
-    
-            
+                transition(ERROR_SAVE, true)
+            });
     }
 
+    //Deletes an appoinment and shows confirmation before deletion
     function deleteId() {
         transition(DELETING, true);
 
@@ -54,10 +53,12 @@ export default function Appointment(props) {
             .then(() => transition(EMPTY))
             .catch(error => transition(ERROR_DELETE, true));
     }
+    //The user is prompted with a confirmation ipon pressing the delete button to confirm deletion
     function confirm() {
         transition(CONFIRM);
     }
 
+    //The user gets transitions into edit mode
     function edit() {
         transition(EDIT);
     }
@@ -110,7 +111,6 @@ export default function Appointment(props) {
                     onClose={back}
                 />
             }
-            {/* {(props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer.name} /> : <Empty /> )} */}
         </article>
     );
 }

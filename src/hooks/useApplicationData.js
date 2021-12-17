@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
-
+//This component holds all the application data for the app - cancelling and booking interviews
 export default function useApplicationData(props) {
     const [state, setState] = useState({
         day: "Monday",
@@ -9,7 +9,6 @@ export default function useApplicationData(props) {
         appointments: {},
         interviewers: {}
     });
-
 
 
     const setDay = day => setState({ ...state, day });
@@ -27,17 +26,8 @@ export default function useApplicationData(props) {
             [id]: appointment
         };
 
-
         const request = axios.put(`/api/appointments/${id}`, appointment)
-            .then(response => {
-                const days = state.days.map((day) => {
-                    const returnedDay = { ...day };
-                    if (returnedDay.appointments.includes(id)) {
-                        returnedDay.spots--;
-                    }
-                    return returnedDay;
-                })
-            })
+
         setState({
             ...state,
             appointments
@@ -57,18 +47,7 @@ export default function useApplicationData(props) {
             [id]: appointment
         };
 
-
         const request = axios.delete(`/api/appointments/${id}`, appointment)
-            .then(response => {
-                const days = state.days.map((day) => {
-                    const returnedDay = { ...day };
-                    if (returnedDay.appointments.includes(id)) {
-                        returnedDay.spots++;
-                    }
-                    return returnedDay;
-                })
-
-            })
         setState({
             ...state,
             appointments

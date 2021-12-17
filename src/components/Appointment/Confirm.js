@@ -1,8 +1,7 @@
-import { prependOnceListener } from 'process';
 import React from 'react';
 import Button from "../Button"
 
-
+//This is the confirm component
 export default function Confirm(props) {
     return (
         <main className="appointment__card appointment__card--confirm">

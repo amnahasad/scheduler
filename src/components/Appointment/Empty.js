@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+//This is the empty component
 export default function Empty(props) {
     return (
         <main className="appointment__add">
