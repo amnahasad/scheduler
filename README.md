@@ -21,3 +21,10 @@ npm test
 ```sh
 npm run storybook
 ```
+
+
+## Screenshots
+
+!["Appoinment form"](https://github.com/amnahasad/scheduler/blob/master/docs/appoinment-form.png?raw=true)
+!["Appoinment form validation"](https://github.com/amnahasad/scheduler/blob/master/docs/appoinment-form-validation.png?raw=true)
+!["Appoinment delete confirmation"](https://github.com/amnahasad/scheduler/blob/master/docs/appoinment-delete-confirmation.png?raw=true)
