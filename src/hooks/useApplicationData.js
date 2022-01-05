@@ -13,6 +13,14 @@ export default function useApplicationData(props) {
 
     const setDay = day => setState({ ...state, day });
 
+    //This function updates the spots available to book an appoinment when an appointment is booked or cancelled
+    function updateSpots() {
+        axios.get("/api/days").then((response) => {
+            setState(prev => ({ ...prev, days: response.data }))
+        })
+    }
+
+    //This function is for booking an interview
     function bookInterview(id, interview) {
         console.log(id, interview);
 
@@ -26,16 +34,17 @@ export default function useApplicationData(props) {
             [id]: appointment
         };
 
-        const request = axios.put(`/api/appointments/${id}`, appointment)
-
-        setState({
-            ...state,
-            appointments
-        });
-        return request;
+        return axios.put(`/api/appointments/${id}`, { interview })
+            .then(() => {
+                setState({
+                    ...state,
+                    appointments
+                })
+                updateSpots()
+            })
     }
 
-
+    //This function is for cancelling an appointment
     function cancelInterview(id) {
         const appointment = {
             id,
@@ -47,12 +56,14 @@ export default function useApplicationData(props) {
             [id]: appointment
         };
 
-        const request = axios.delete(`/api/appointments/${id}`, appointment)
-        setState({
-            ...state,
-            appointments
-        });
-        return request;
+        return axios.delete(`/api/appointments/${id}`, appointment)
+            .then(() => {
+                setState({
+                    ...state,
+                    appointments
+                })
+                updateSpots()
+            })
     }
 
 
